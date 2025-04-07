@@ -1,3 +1,8 @@
+/* 
+ * Copyright (c) 2025 1234567Yang
+ * SPDX-License-Identifier: Modified MIT (LICENSE.cf-proxy-ex)
+ */
+
 addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   thisProxyServerUrlHttps = `${url.protocol}//${url.hostname}/`;
