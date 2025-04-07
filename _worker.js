@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2025 1234567Yang
- * SPDX-License-Identifier: Modified MIT (LICENSE.cf-proxy-ex)
+ * License: Modified MIT (LICENSE.cf-proxy-ex)
  */
 
 addEventListener('fetch', event => {
@@ -21,27 +21,77 @@ const replaceUrlObj = "__location____"
 var thisProxyServerUrlHttps;
 var thisProxyServerUrl_hostOnly;
 // const CSSReplace = ["https://", "http://"];
+
 const proxyHintInjection = `
 //---***========================================***---提示使用代理---***========================================***---
 
 setTimeout(() => {
-  var hint = \`Warning: You are currently using a web proxy, so do not log in to any website. Click to close this hint. For further details, please visit <a href="https://github.com/1234567Yang/cf-proxy-ex/" style="color:rgb(250,250,180);">https://github.com/1234567Yang/cf-proxy-ex/</a>. <br>警告：您当前正在使用网络代理，请勿登录任何网站。单击关闭此提示。详情请见 <a href="https://github.com/1234567Yang/cf-proxy-ex/" style="color:rgb(250,250,180);">https://github.com/1234567Yang/cf-proxy-ex/</a>。\`;
+  const hint = \`THIS IS NOT A SCAM WEBSITE!<br>Warning: You are currently using ILoveScratch proxy, do not log in. Click to close. Details: <a href="https://github.com/1234567Yang/cf-proxy-ex/" style="color:#2196F3;">GitHub</a><br>.
+警告：您当前正在使用ILoveScratch网络代理，请勿登录。单击关闭。详情请见 <a href="https://github.com/1234567Yang/cf-proxy-ex/" style="color:#2196F3;">GitHub</a>。\`;
+
+  const hintStyle = \`
+    @keyframes slideIn {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(0); }
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-100%); }
+    }
+    .hint-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999999;
+      max-width: 90%;
+      min-width: 300px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      padding: 16px 24px;
+      animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      color: rgba(0,0,0,0.8);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .hint-container.exit {
+      animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    .hint-container a {
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  \`;
+
+  const containerHTML = \`
+    <div class="hint-container" id="__PROXY_HINT_DIV__">
+      \${hint}
+    </div>
+  \`;
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    document.body.insertAdjacentHTML(
-      'afterbegin', 
-      \`<div style="position:fixed;left:0px;top:0px;width:100%;margin:0px;padding:0px;display:block;z-index:99999999999999999999999;user-select:none;cursor:pointer;" id="__PROXY_HINT_DIV__" onclick="document.getElementById('__PROXY_HINT_DIV__').remove();">
-        <span style="position:absolute;width:calc(100% - 20px);min-height:30px;font-size:18px;color:yellow;background:rgb(180,0,0);text-align:center;border-radius:5px;padding-left:10px;padding-right:10px;padding-top:1px;padding-bottom:1px;">
-          \${hint}
-        </span>
-      </div>\`
-    );
-  }else{
+    const style = document.createElement('style');
+    style.textContent = hintStyle;
+    document.head.appendChild(style);
+    
+    document.body.insertAdjacentHTML('afterbegin', containerHTML);
+    
+    const hintDiv = document.getElementById('__PROXY_HINT_DIV__');
+    hintDiv.onclick = function() {
+      this.classList.add('exit');
+      this.addEventListener('animationend', () => this.remove());
+    };
+  } else {
     alert(hint);
   }
 }, 5000);
-
 `;
+
 var httpRequestInjection = `
 
 //---***========================================***---information---***========================================***---
