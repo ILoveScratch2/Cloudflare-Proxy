@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2025 1234567Yang
- * License: Modified MIT (LICENSE.cf-proxy-ex)
+ * License: MIT with Additional Requires (LICENSE.cf-proxy-ex)
  */
 
 addEventListener('fetch', event => {
@@ -22,6 +22,12 @@ var thisProxyServerUrlHttps;
 var thisProxyServerUrl_hostOnly;
 // const CSSReplace = ["https://", "http://"];
 
+
+
+/*
+ * Copyright (c) 2025 ILoveScratch2
+ * License: Modified MIT (LICENSE)
+ */
 const proxyHintInjection = `
 //---***========================================***---提示使用代理---***========================================***---
 
@@ -31,18 +37,18 @@ setTimeout(() => {
 
   const hintStyle = \`
     @keyframes slideIn {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(0); }
+      0% { opacity: 0; transform: translate(-50%, -50%); }
+      100% { opacity: 1; transform: translate(-50%, -50%); }
     }
     @keyframes fadeOut {
-      0% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-100%); }
+      0% { opacity: 1; transform: translate(-50%, -50%); }
+      100% { opacity: 0; transform: translate(-50%, -50%); }
     }
     .hint-container {
       position: fixed;
-      top: 20px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       z-index: 999999;
       max-width: 90%;
       min-width: 300px;
